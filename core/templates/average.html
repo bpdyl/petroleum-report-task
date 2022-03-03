@@ -1,23 +1,25 @@
 {% extends 'base.html' %}
+
 {% block core_body %}
-{% if sales %}
-<table class="example" border="1px solid">
+
+<table class="example">
     <thead>
         <tr>
             <th>SN</th>
-           <th> Petroleum Products</th>
-           <th>Total Sales</th>
+            <th>Product</th>
+            <th>Year</th>
+            <th>Average Sale</th>
         </tr>
     </thead>
     <tbody>
-        {% for s in sales %}
+        {% for t in test_data %}
         <tr>
             <td>{{forloop.counter}}</td>
-            <td>{{s.petroleum_product}}</td>
-            <td>{{s.sale__sum}}</td>
+            <td>{{t.petroleum_product}}</td>
+            <td>{{t.year}}</td>
+            <td>{{t.avg_sale}}</td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
-{% endif %}
 {% endblock %}

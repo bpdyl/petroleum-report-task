@@ -1,8 +1,10 @@
+
 from django.shortcuts import render
 from .models import PetroleumDetails
-from django.db.models import Count,Sum
+from django.db.models import Count,Sum,Avg
 from django.views.generic import View, ListView
 import requests
+from django.db import connection
 import json
 # Create your views here.
 class IndexView(ListView):
@@ -102,3 +104,37 @@ class ByCountryView(ListView):
         context['high_country'] = high_country
         context['low_country'] = low_country
         return context
+
+
+def my_custom_sql(year1,year2):
+    with connection.cursor() as cursor:
+        cursor.execute('SELECT sale,year,petroleum_product from core_petroleumdetails where year between "'+str(year1)+'" and "'+str(year2)+'"')
+        row = cursor.fetchall()
+
+    return row
+
+class AverageSalesView(ListView):
+    model = PetroleumDetails
+    template_name = 'average.html'
+    def get_context_data(self,**kwargs):
+        context = super().get_context_data(**kwargs)
+        t_d = PetroleumDetails.objects.values('petroleum_product').exclude(sale = 0).filter(year__range=(2007,2010)).annotate(avg_sale = Avg('sale'))
+        t_d2 = PetroleumDetails.objects.values('petroleum_product').exclude(sale = 0).filter(year__range=(2011,2014)).annotate(avg_sale = Avg('sale'))
+        test_data = t_d.union(t_d2)
+        print("available years",test_data)
+        years = []
+        # for a in available_years:
+        #     years.append(int(a['year']))
+        
+        # print(years)
+        # res_list = []
+        # for y in years:
+        #     res = PetroleumDetails.objects.raw('SELECT id,petroleum_product,year from core_petroleumdetails where year between "'+str(y)+'" and "'+str(y+3)+'"')
+            
+        # result = PetroleumDetails.objects.raw('SELECT id,petroleum_product,year,  as average_sale from core_petroleumdetails where year between "'+str(years[0])+'" and "'+str(years[0]+3)+'"')
+
+        #annotating the sale__sum based on the value country of our model
+        #and ordering in descending/ascending order of total sale sum and slicing the first 3 records only
+        context['test_data'] = test_data
+        return context
+
