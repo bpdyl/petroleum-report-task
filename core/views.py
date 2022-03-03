@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .models import PetroleumDetails
+from django.db.models import Count,Sum
 from django.views.generic import View, ListView
 import requests
 import json
@@ -75,3 +76,16 @@ class IndexView(ListView):
         petroleum_details = PetroleumDetails.objects.all()
         context['all_petroleum'] = petroleum_details
         return context
+
+
+class TotalSalesView(ListView):
+    model = PetroleumDetails
+    template_name = 'total_sales.html'
+    def get_context_data(self, **kwargs):
+        context =  super().get_context_data(**kwargs)
+        total_sales = []
+        #annotating the sale__sum along with the petroleum product values
+        sales = PetroleumDetails.objects.values('petroleum_product').annotate(Sum('sale'))
+        print(sales)
+        context['sales'] = sales
+        return context 

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block core_body %}
+{% if sales %}
+<table class="example" border="1px solid">
+    <thead>
+        <tr>
+           <th> Petroleum Products</th>
+           <th>Total Sales</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for s in sales %}
+        <tr>
+            <td>{{s.petroleum_product}}</td>
+            <td>{{s.sale__sum}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+{% endblock %}
