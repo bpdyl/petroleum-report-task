@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block core_head %}
+<style>
+    #highest-sale{
+        margin-bottom: 2rem;
+    }
+    #lowest-sale{
+        margin-top: 2rem;
+    }
+    .example{
+        border: 1px solid black;
+    }
+</style>
+{% endblock %}
+{% block core_body %}
+<div id="highest-sale">
+    <h4>Top 3 countries with highest sale</h4>
+    <table class="example">
+        <thead>
+            <tr>
+                <th>SN</th>
+                <th>Country</th>
+                <th>Sales</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if high_country %}
+            {% for h in high_country %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{h.country}}</td>
+                <td>{{h.sale__sum}}</td>
+            </tr>
+            {% endfor %}
+            {% endif %}
+        </tbody>
+    </table>
+    </div>
+    
+    <div id="lowest-sale">
+    <h4>Top 3 countries with lowest sale</h4>
+    <table class="example">
+        <thead>
+            <tr>
+                <th>SN</th>
+                <th>Country</th>
+                <th>Sales</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if low_country %}
+            {% for l in low_country %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{l.country}}</td>
+                <td>{{l.sale__sum}}</td>
+            </tr>
+            {% endfor %}
+            {% endif %}
+        </tbody>
+    </table>
+    </div>
+{% endblock %}

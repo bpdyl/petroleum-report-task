@@ -89,3 +89,16 @@ class TotalSalesView(ListView):
         print(sales)
         context['sales'] = sales
         return context 
+
+class ByCountryView(ListView):
+    model = PetroleumDetails
+    template_name = 'country.html'
+    def get_context_data(self,**kwargs):
+        context = super().get_context_data(**kwargs)
+        #annotating the sale__sum based on the value country of our model
+        #and ordering in descending/ascending order of total sale sum and slicing the first 3 records only
+        high_country = PetroleumDetails.objects.values('country').annotate(Sum('sale')).order_by('-sale__sum')[:3]
+        low_country = PetroleumDetails.objects.values('country').annotate(Sum('sale')).order_by('sale__sum')[:3]
+        context['high_country'] = high_country
+        context['low_country'] = low_country
+        return context
