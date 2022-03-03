@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+<body>
+    {% block core_body %}
+    <div id="display_data_div">
+    {% if all_petroleum %}
+    <table class="example">
+        <thead>
+        <tr>
+            <th>SN</th>
+            <th>Year</th>
+            <th>Petroleum Product</th>
+            <th>Sales</th>
+            <th>Country</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for p in all_petroleum %}
+        <tr>
+        <td>{{ forloop.counter }}</td>
+          <td>{{p.year}}</td>
+          <td>{{p.petroleum_product}}</td>  
+          <td>{{p.sale}}</td>  
+          <td>{{p.country}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    </table>    
+        {% endif %}
+</div>
+{% endblock %}
+</body>
