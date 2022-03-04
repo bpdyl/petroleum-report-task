@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block core_body %}
-
+<h3>Average sales of product for 4 years of interval</h3>
 <table class="example">
     <thead>
         <tr>
@@ -12,13 +12,13 @@
         </tr>
     </thead>
     <tbody>
-        {% for t in test_data %}
+        {% for data in final_data %}
         <tr>
             <td>{{forloop.counter}}</td>
-            <td>{{t.petroleum_product}}</td>
-            <td>{{t.year}}</td>
-            <td>{{t.avg_sale}}</td>
-        </tr>
+            <td>{{data.petroleum_product}}</td>
+            <td>{{data.year_range}}</td>
+            <td>{{data.avg_sale}}</td>
+        </tr> 
         {% endfor %}
     </tbody>
 </table>
