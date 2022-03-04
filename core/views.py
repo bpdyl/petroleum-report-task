@@ -106,13 +106,6 @@ class ByCountryView(ListView):
         return context
 
 
-def my_custom_sql(year1,year2):
-    with connection.cursor() as cursor:
-        cursor.execute('SELECT sale,year,petroleum_product from core_petroleumdetails where year between "'+str(year1)+'" and "'+str(year2)+'"')
-        row = cursor.fetchall()
-
-    return row
-
 class AverageSalesView(ListView):
     model = PetroleumDetails
     template_name = 'average.html'
