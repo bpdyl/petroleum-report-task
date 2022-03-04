@@ -1,5 +1,6 @@
-How to run
+heroku link for the app: https://petroleumreports.herokuapp.com
 
+How to run
 1. Navigate to the directory where you want to keep this project
 2. mkdir yourfolder_name
 3. cd yourfolder_name
