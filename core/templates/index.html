@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 <body>
     {% block core_body %}
+    {% if error %}
+    <h1>{{error}}</h1>
+    {% endif %}
     <h3>Overall list </h3>
     <div id="display_data_div">
     {% if all_petroleum %}
